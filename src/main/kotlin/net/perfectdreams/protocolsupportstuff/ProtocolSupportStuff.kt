@@ -67,14 +67,19 @@ class ProtocolSupportStuff : JavaPlugin() {
 			config.set("blocks",
 					listOf(
 							mapOf(
-									"from" to "Bone Block",
-									"to" to "Quartz Block",
+                                    "from" to "bone_block",
+									"to" to "quartz_block",
 									"before" to "Minecraft 1.10"
 							),
 							mapOf(
-									"from" to "Hay Block",
-									"to" to "Yellow Wool",
+									"from" to "hay_block",
+									"to" to "yellow_wool",
 									"before" to "Minecraft 1.6.1"
+							),
+							mapOf(
+									"from" to "smooth_stone_slab[type=double]",
+									"to" to "stone_slab[type=double]",
+									"before" to "Minecraft 1.14"
 							)
 					)
 			)
@@ -189,12 +194,9 @@ class ProtocolSupportStuff : JavaPlugin() {
 		if (range.contains(version)) {
 			if (remapper is BlockRemapperControl) {
 				if (value["from"] != null && value["to"] != null) {
-					val from = Material.valueOf((value["from"] as String).enumify())
-					val to = Material.valueOf((value["to"] as String).enumify())
-
-					registerRemapEntryForAllStates(from, remapper) { it: BlockData ->
-						to.createBlockData()
-					}
+					val from = Bukkit.createBlockData(value["from"] as String)
+					val to = Bukkit.createBlockData(value["to"] as String)
+					remapper.setRemap(from, to);
 				} else if (value["from-state"] != null && value["to-state"] != null) {
 					val fromState = value["from-state"] as String
 					val toState = value["to-state"] as String
