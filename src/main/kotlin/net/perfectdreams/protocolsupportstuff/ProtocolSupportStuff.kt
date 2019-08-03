@@ -67,7 +67,7 @@ class ProtocolSupportStuff : JavaPlugin() {
 			config.set("blocks",
 					listOf(
 							mapOf(
-                                    "from" to "bone_block",
+									"from" to "bone_block",
 									"to" to "quartz_block",
 									"before" to "Minecraft 1.10"
 							),
